@@ -1,17 +1,26 @@
-const http = require('http');
+const express = require('express');
 
-const server = http.createServer((req,res)=>{
-    const{url} = req;
-    console.log(url);
-    if(url === '/'){
-        res.end('Pagina Inicial (Raiz)');
-    }else if (url === '/contato'){
-        res.end('Pagina de Contato');
-    }else if(url === '/sobre'){
-        res.end('Pagina Sobre o Projeto');
-    }
+const app = express();
+
+app.get('/',(req,res)=>{
+    res.send('Ola Eu Sou o Node.js');
 });
 
-server.listen(3000, ()=>{
-    console.log('Servidor Rodando na Porta 3000');
+app.get('/contato',(req,res)=>{
+    res.send('Pagina de Contatos');
 });
+
+app.get('/sobre',(req,res)=>{
+    res.send('Pagina sobre o Projeto');
+});
+
+app.get('*',(req,res)=>{
+    res.status(404).send('Pagina Nao Encontrada');
+});
+
+const PORT = 3000;
+
+app.listen(PORT, ()=>{
+    console.log(`Servidor rodando na Porta ${PORT}`);
+});
+
